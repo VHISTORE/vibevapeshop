@@ -225,18 +225,17 @@ function onCheckoutSubmit(ev){
 ${items}
 Итого: ${total} ₴`;
 
-  // username берём из window.TG_USERNAME, иначе по умолчанию твой
-  const username = (window.TG_USERNAME || "viibbee_17").replace("@", "");
+  // Данные для твоего Telegram
+  const username = "viibbee_17"; // @viibbee_17
   const encoded = encodeURIComponent(text);
 
-  // 1) Пытаемся открыть приложение Telegram
+  // 1) Прямая ссылка в приложение Telegram
   const tgDeep = `tg://resolve?domain=${username}&text=${encoded}`;
-  // 2) Фолбек — веб Telegram
+  // 2) Фолбек — Web Telegram
   const tgWeb  = `https://t.me/${username}?text=${encoded}`;
 
   let opened = false;
   try {
-    // _self снижает шанс блокировки поп-апов
     const w = window.open(tgDeep, "_self");
     opened = !!w;
   } catch (_) {}
