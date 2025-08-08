@@ -1,0 +1,42 @@
+[
+  {
+    "id": "liq-001",
+    "category": "liquid",
+    "title": "Berry Mix 60ml",
+    "brand": "CloudLab",
+    "flavor": "ягоды",
+    "strength": 3,
+    "volume_ml": 60,
+    "price": 299,
+    "oldPrice": 350,
+    "popular": true,
+    "new": true,
+    "img": "https://images.unsplash.com/photo-1605979257913-170b4f4c6f7a?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "liq-002",
+    "category": "liquid",
+    "title": "Mango Ice 30ml (Salt)",
+    "brand": "SaltBay",
+    "flavor": "манго лед",
+    "strength": 20,
+    "volume_ml": 30,
+    "price": 249,
+    "popular": true,
+    "new": false,
+    "img": "https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "pod-101",
+    "category": "pod",
+    "title": "Pod Cartridge 2ml (2pcs)",
+    "brand": "VibePod",
+    "strength": 0,
+    "flavor": "",
+    "volume_ml": 2,
+    "price": 199,
+    "popular": false,
+    "new": true,
+    "img": "https://images.unsplash.com/photo-1600959907703-125ba1374a8b?q=80&w=800&auto=format&fit=crop"
+  }
+]
