@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VapeMarket — Жидкости и Картриджи</title>
+  <meta name="description" content="Магазин жидкостей и картриджей для POD систем. Быстрая доставка. 18+">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preload" href="data/products.json" as="fetch" crossorigin="anonymous">
+</head>
+<body>
+  <!-- 18+ -->
+  <div class="age-gate" id="ageGate" aria-hidden="true">
+    <div class="age-card">
+      <h2>Вам есть 18 лет?</h2>
+      <p>Сайт содержит информацию о товарах 18+. Подтвердите возраст.</p>
+      <div class="age-actions">
+        <button id="ageYes" class="btn primary">Да, мне 18+</button>
+        <button id="ageNo" class="btn outline">Нет</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <span class="logo">VapeMarket</span>
+        <span class="tagline">Жидкости и картриджи • 18+</span>
+      </div>
+
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Поиск по названию, вкусу, бренду…" />
+      </div>
+
+      <button id="cartBtn" class="cart-btn" aria-label="Корзина">
+        🛒 <span id="cartCount" class="badge">0</span>
+      </button>
+    </div>
+
+    <nav class="nav">
+      <div class="container nav-row">
+        <div class="tabs">
+          <button class="tab active" data-category="all">Все</button>
+          <button class="tab" data-category="liquid">Жидкости</button>
+          <button class="tab" data-category="pod">Картриджи</button>
+        </div>
+        <div class="filters">
+          <select id="brandFilter">
+            <option value="">Бренд: все</option>
+          </select>
+          <select id="strengthFilter">
+            <option value="">Крепость: любая</option>
+            <option value="0">0 mg</option>
+            <option value="3">3 mg</option>
+            <option value="6">6 mg</option>
+            <option value="12">12 mg</option>
+            <option value="20">20 mg (salt)</option>
+          </select>
+          <select id="sortSelect">
+            <option value="pop">Сортировать: популярное</option>
+            <option value="price_asc">Цена ↑</option>
+            <option value="price_desc">Цена ↓</option>
+            <option value="new">Новинки</option>
+          </select>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <span>© VapeMarket • 18+ • Не является публичной офертой</span>
+      <a href="#" id="openPolicy">Политика возврата</a>
+    </div>
+  </footer>
+
+  <!-- Корзина -->
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Корзина</h3>
+      <button id="closeCart" class="icon-btn" aria-label="Закрыть">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-foot">
+      <div class="totals">
+        <span>Итого:</span>
+        <strong id="cartTotal">0 ₴</strong>
+      </div>
+      <button id="checkoutBtn" class="btn primary">Оформить заказ</button>
+    </div>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- Чекаут -->
+  <dialog id="checkoutModal" class="modal">
+    <form id="checkoutForm" method="dialog" class="modal-card">
+      <h3>Оформление заказа</h3>
+      <label>Имя<input required name="name" placeholder="Ваше имя"/></label>
+      <label>Телефон<input required name="phone" placeholder="+380..." /></label>
+      <label>Способ доставки
+        <select name="delivery" required>
+          <option value="nova">Новая Почта</option>
+          <option value="courier">Курьер по городу</option>
+          <option value="pickup">Самовывоз</option>
+        </select>
+      </label>
+      <label>Комментарий
+        <textarea name="comment" rows="3" placeholder="Адрес/отделение, удобное время..."></textarea>
+      </label>
+      <div class="modal-actions">
+        <button class="btn outline" value="cancel">Назад</button>
+        <button class="btn primary" value="submit">Отправить</button>
+      </div>
+      <p class="helper">Заказ отправится в Telegram/Email. Мы свяжемся для подтверждения.</p>
+    </form>
+  </dialog>
+
+  <!-- Политика (пример) -->
+  <dialog id="policyModal" class="modal">
+    <div class="modal-card">
+      <h3>Политика возврата</h3>
+      <p>Одноразовые картриджи и жидкости относятся к категории товаров надлежащего качества, не подлежащих возврату после вскрытия. Если товар дефектный — обмен в течение 14 дней.</p>
+      <div class="modal-actions">
+        <button class="btn primary" id="closePolicy">Понятно</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>window.TG_USERNAME = "your_shop_support"; window.ORDER_EMAIL="orders@example.com";</script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
