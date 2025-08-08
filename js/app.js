@@ -209,33 +209,41 @@ function closeCartDrawer(){ cartDrawer.classList.remove("open"); backdrop.classL
 // --- Checkout ---
 function onCheckoutSubmit(ev){
   ev.preventDefault();
-  const data = Object.fromEntries(new FormData(checkoutForm).entries());
-  const items = CART.map(i=>`${i.title} × ${i.qty} = ${i.price*i.qty}₴`).join("%0A");
-  const total = CART.reduce((s,i)=> s + i.price*i.qty, 0);
 
-  const text = `🧾 Заказ с сайта:
+  const data = Object.fromEntries(new FormData(checkoutForm).entries());
+  const items = CART.map(i => `${i.title} × ${i.qty} = ${i.price * i.qty}₴`).join("\n");
+  const total = CART.reduce((s, i) => s + i.price * i.qty, 0);
+
+  const text =
+`🧾 Заказ с сайта
 Имя: ${data.name}
 Телефон: ${data.phone}
 Доставка: ${data.delivery}
 Комментарий: ${data.comment || "-"}
----
+—
 Товары:
-${decodeURIComponent(items.replace(/%0A/g,"\n"))}
+${items}
 Итого: ${total} ₴`;
 
-  // 1) Telegram (личка или суппорт)
-  if (window.TG_USERNAME){
-    const tgURL = `https://t.me/${window.TG_USERNAME}?text=${encodeURIComponent(text)}`;
-    window.open(tgURL, "_blank");
-  }
-  // 2) Email (fallback)
-  if (window.ORDER_EMAIL){
-    const mailURL = `mailto:${window.ORDER_EMAIL}?subject=${encodeURIComponent("Заказ с сайта")}&body=${encodeURIComponent(text)}`;
-    window.location.href = mailURL;
-  }
+  // username берём из window.TG_USERNAME, иначе по умолчанию твой
+  const username = (window.TG_USERNAME || "viibbee_17").replace("@", "");
+  const encoded = encodeURIComponent(text);
+
+  // 1) Пытаемся открыть приложение Telegram
+  const tgDeep = `tg://resolve?domain=${username}&text=${encoded}`;
+  // 2) Фолбек — веб Telegram
+  const tgWeb  = `https://t.me/${username}?text=${encoded}`;
+
+  let opened = false;
+  try {
+    // _self снижает шанс блокировки поп-апов
+    const w = window.open(tgDeep, "_self");
+    opened = !!w;
+  } catch (_) {}
+
+  setTimeout(() => {
+    if (!opened) window.open(tgWeb, "_blank");
+  }, 300);
 
   checkoutModal.close();
 }
-
-// --- Utils ---
-function debounce(fn, ms){ let t; return (...a)=>{clearTimeout(t); t=setTimeout(()=>fn(...a), ms);} }
